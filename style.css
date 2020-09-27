@@ -10,16 +10,24 @@ body {
 header h1 {
   text-align: center;
   font-size: 2.5rem;
+  margin-top: 50px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 form {
+  width: 100%;
   display: flex;
   flex-flow: column;
   align-items: center;
   justify-content: center;
   max-width: 550px;
-  padding: 20px;
-  margin: 0 auto;
+  margin-top: 20px;
+  padding: 40px 10px;
   background: #eeeeee;
   border-radius: 3px;
 }
@@ -54,5 +62,54 @@ form button {
   border-radius: 3px;
   background: #1625fc;
   color: #ffffff;
+  cursor: pointer;
+}
+
+.section {
+  width: 90%;
+  display: grid;
+  place-items: center;
+  gap: 25px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 200px;
+  margin: 100px 0;
+}
+
+@media (min-width: 768px) {
+  .section {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.section > div {
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 10px;
+}
+
+.section > div > #delete {
+  width: 70px;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 4px;
+  background-color: #000000;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.section > div > #status {
+  background: #ffffff;
+  padding: 6px 8px;
+  border-radius: 6px;
   cursor: pointer;
 }

@@ -4,15 +4,18 @@ const title = document.querySelector("#title");
 const pages = document.querySelector("#pages");
 const read = document.querySelector("#read");
 const unread = document.querySelector("#unread");
-const submit = document.querySelector("#button");
-// let status;
+const submit = document.querySelector("#submit");
+const main = document.createElement("main");
+const section = document.createElement("section");
 
 // Events
 submit.addEventListener("click", addBookToLibrary);
 
-// Functions
+// Variables
 let myLibrary = [];
+let status = "";
 
+// Functions
 class Book {
   constructor(author, title, pages, status) {
     this.author = author;
@@ -25,30 +28,71 @@ class Book {
 // Adding to array
 function addBookToLibrary(event) {
   event.preventDefault();
-  let status = null;
+
+  // let status = null;
+
   if (read.checked) {
     status = read.value;
-  } else {
+  }
+  if (unread.checked) {
     status = unread.value;
   }
+
   const book = new Book(author.value, title.value, pages.value, status);
+
   myLibrary.push(book);
-  //   console.log(myLibrary);
+
+  // Rendering section only once
+  if (!main.contains(section)) document.querySelector("main").append(section);
 
   displayBooks();
 }
 
 //Adding the myLibrary to the DOM
 function displayBooks() {
-  const section = document.createElement("section");
-  document.querySelector("main").append(section);
-  myLibrary.forEach(({ author, title, pages, status }) => {
-    section.innerHTML = `<div>
-    <h2>${author}</h2>
+  if (
+    author.value !== "" &&
+    title.value !== "" &&
+    pages.value !== "" &&
+    status !== ""
+  ) {
+    const div = document.createElement("div");
+    section.append(div);
+    section.classList.add("section");
+
+    myLibrary.forEach(({ author, title, pages, status }) => {
+      div.innerHTML = `<h2>${author}</h2>
     <p>${title}</p>
     <p>${pages}</p>
-    <p>${status}</p>
-    <button>Delete</button>
-</div>`;
+    <p id="status">${status}</p>
+    <button id="delete">Delete</button>`;
+    });
+
+    //Removing book when clicked delete button
+    deleteBook();
+    changeStatus();
+  } else {
+    alert("Please fill the form");
+  }
+}
+
+function deleteBook() {
+  document.querySelectorAll("#delete").forEach((button) => {
+    button.addEventListener("click", (event) =>
+      event.target.parentElement.remove()
+    );
+  });
+}
+
+function changeStatus() {
+  document.querySelectorAll("#status").forEach((status) => {
+    status.addEventListener("click", (event) => {
+      if (event.target.innerText === "read") {
+        event.target.innerText = "unread";
+      }
+      if (event.target.innerText === "unread") {
+        event.target.innerText = "read";
+      }
+    });
   });
 }
